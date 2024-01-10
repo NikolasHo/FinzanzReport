@@ -4,7 +4,7 @@ Dieses Script hilft dabei die Kontobewegungen in Blick zu behalten, in dem es hi
 
 FinanzReport basiert auf einer Klassenerkennung jeder einzelnen Buchung anhand eines Musters.
 
-![](./Example.png =250x)
+![](Example.png =250x)
 
 
 # Anleitung
