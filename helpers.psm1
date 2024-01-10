@@ -221,7 +221,7 @@ function Get-HtmlForDataset {
         $html += @"
           <tr>
             <td>$($categorie.name)</td>
-            <td>$($categorie.value) €</td>
+            <td>$($categorie.value) &euro;</td>
           </tr>
 "@
     }
@@ -272,7 +272,7 @@ function Get-HtmlForDatasetUnclassified {
             $html += @"
             <tr>
                 <td>$($entry.Buchungstext)</td>
-                <td>$($entry."Umsatz in EUR") €</td>
+                <td>$($entry."Umsatz in EUR") &euro;</td>
             </tr>
 "@
             
