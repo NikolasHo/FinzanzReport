@@ -1,0 +1,73 @@
+{
+    "patterns": {
+      "Versorgung": {
+        "keywords": [
+          "Edeka",
+          "Aldi",
+          "Lidl",
+          "Rewe",
+          "Kaufland",
+          "Netto",
+          "BAEDER BRINGT BIO",
+          "Lieferando",
+          "KoRo"
+        ],
+        "color": "#36a2eb" 
+      },
+      "Pflege": {
+        "keywords": [
+          "DM",
+          "Rossmann"
+        ],
+        "color": "#ffce56"
+      },
+      "Einkauf": {
+        "keywords": [
+          "Amazon",
+          "Social Fashion Company GmbH",
+          "Megaport GmbH",
+          "Babyone",
+          "Obi",
+          "Hagebau",
+          "Hornbach"
+        ],
+        "color": "#4bc0c0" 
+      },
+      "Einkommen": {
+        "keywords": [
+          "Gehalt"
+        ],
+        "color": "#66c2ff" 
+      },
+      "Vergnügen": {
+        "keywords": [
+          "Freestyle",
+          "Mc Donalds",
+          "Spotify AB",
+          "DisneyPlus",
+          "Netflix",
+          "Amazon Prime"
+        ],
+        "color": "#acd2ff" 
+      },
+      "Versicherung": {
+        "keywords": [
+          "ERGO",
+          "Swiss Life AG",
+          "Hannoversche"
+        ],
+        "color": "#13d2ff" 
+      },
+      "Handy": {
+        "keywords": [
+          "klarmobil GmbH",
+          "WinSwim",
+          "O2",
+          "Telekom",
+          "Vodafone"
+        ],
+        "color": "#33df21" 
+      }
+    }
+  }
+  

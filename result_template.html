@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finanzreport</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Change style */
+    .data-table {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-bottom: 50px;
+    }
+    .table-container {
+      flex: 1;
+      margin-right: 20px;
+    }
+    .chart-container {
+      flex: 1;
+    }
+    canvas {
+      width: 100% !important;
+      height: auto !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Übersicht</h1>
+
+    <!-- Chart -->
+    <div class="row">
+        <div class="col">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Dropdown for the date ranges -->
+    <div class="row mt-3">
+        <div class="col-md-3">
+            <label for="startYearSelect">Startjahr:</label>
+            <select id="startYearSelect" class="form-control"></select>
+        </div>
+        <div class="col-md-3">
+            <label for="startMonthSelect">Startmonat:</label>
+            <select id="startMonthSelect" class="form-control"></select>
+        </div>
+        <div class="col-md-3">
+            <label for="endYearSelect">Endjahr:</label>
+            <select id="endYearSelect" class="form-control"></select>
+        </div>
+        <div class="col-md-3">
+            <label for="endMonthSelect">Endmonat:</label>
+            <select id="endMonthSelect" class="form-control"></select>
+        </div>
+    </div>
+
+    <!-- Checkboxes for categories-->
+    <div id="categoryCheckboxes" class="row mt-3"></div>
+  </div>
+  <div class="border-top my-3"></div>
+</body>
+<!-- Script block for the pie charts-->
+<script>
+
+//Script End
+</script>
+
+<!-- Script block for the line chart-->
+<script>
+
+  
+  // add your data
+
+  var data = JSON.parse(JSON.stringify(dataJson));
+
+  // Füllen Sie die Dropdown-Menüs mit den verfügbaren Jahren und Monaten
+  var startYearSelect = document.getElementById('startYearSelect');
+  var startMonthSelect = document.getElementById('startMonthSelect');
+  var endYearSelect = document.getElementById('endYearSelect');
+  var endMonthSelect = document.getElementById('endMonthSelect');
+  var years = [...new Set(data.map(d => d.year))];  // exact years
+  var months = [...new Set(data.map(d => d.month))];  // exact month
+  years.forEach(function(year) {
+      var option1 = document.createElement('option');
+      option1.value = year;
+      option1.text = year;
+      startYearSelect.appendChild(option1);
+
+      var option2 = document.createElement('option');
+      option2.value = year;
+      option2.text = year;
+      endYearSelect.appendChild(option2);
+  });
+  months.forEach(function(month) {
+      var option1 = document.createElement('option');
+      option1.value = month;
+      option1.text = month;
+      startMonthSelect.appendChild(option1);
+
+      var option2 = document.createElement('option');
+      option2.value = month;
+      option2.text = month;
+      endMonthSelect.appendChild(option2);
+  });
+
+  // Checkboxes for every category
+  var checkboxesDiv = document.getElementById('categoryCheckboxes');
+  var categories = data[0].categories.map(c => c.name);
+  categories.forEach(function(category) {
+      var div = document.createElement('div');
+      div.className = 'custom-control custom-checkbox';
+
+      var checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.id = category;
+      checkbox.checked = true;
+      checkbox.className = 'custom-control-input';
+
+      var label = document.createElement('label');
+      label.htmlFor = category;
+      label.className = 'custom-control-label';
+      label.appendChild(document.createTextNode(category));
+
+      div.appendChild(checkbox);
+      div.appendChild(label);
+      checkboxesDiv.appendChild(div);
+  });
+
+  // Checkbox for cumulated value
+  var div = document.createElement('div');
+    div.className = 'custom-control custom-checkbox';
+
+  var cumulativeCheckbox = document.createElement('input');
+    cumulativeCheckbox.type = 'checkbox';
+    cumulativeCheckbox.id = 'cumulative';
+    cumulativeCheckbox.checked = true;
+    cumulativeCheckbox.className = 'custom-control-input';
+
+  var cumulativeLabel = document.createElement('label');
+    cumulativeLabel.htmlFor = 'cumulative';
+    cumulativeLabel.appendChild(document.createTextNode('Kumulierte Ausgaben'));
+    cumulativeLabel.className = 'custom-control-label';
+
+    div.appendChild(cumulativeCheckbox);
+    div.appendChild(cumulativeLabel);
+    checkboxesDiv.appendChild(div)
+    checkboxesDiv.appendChild(document.createElement('br'));
+
+
+  // create the chart
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+          labels: data.map(d => d.month + '/' + d.year),
+          datasets: categories.map(function(category) {
+              return {
+                  label: category,
+                  data: data.map(d => d.categories.find(c => c.name === category).value),
+                  fill: false,
+                  borderDash: category === 'Einkommen' ? [] : [5, 5]
+              };
+          }).concat({
+              label: 'Kumulierte Ausgaben',
+              data: data.map(d => d.categories.filter(c => c.name !== 'Einkommen').reduce((sum, c) => sum + c.value, 0)),
+              fill: false,
+              borderDash: [2, 5],
+              hidden: !cumulativeCheckbox.checked
+          })
+      },
+      options: {
+          responsive: true,
+          scales: {
+              x: {display: true, title: {display: true, text: 'Monat/Jahr'}},
+              y: {display: true, title: {display: true, text: 'Wert €'}}
+          }
+      }
+  });
+
+  // refresh the chart
+  checkboxesDiv.addEventListener('change', updateChart);
+  startYearSelect.addEventListener('change', updateChart);
+  startMonthSelect.addEventListener('change', updateChart);
+  endYearSelect.addEventListener('change', updateChart);
+  endMonthSelect.addEventListener('change', updateChart);
+
+  function updateChart() {
+      var selectedStartYear = startYearSelect.value;
+      var selectedStartMonth = startMonthSelect.value;
+      var selectedEndYear = endYearSelect.value;
+      var selectedEndMonth = endMonthSelect.value;
+      var selectedData = data.filter(d => (d.year > selectedStartYear || (d.year == selectedStartYear && d.month >= selectedStartMonth)) && (d.year < selectedEndYear || (d.year == selectedEndYear && d.month <= selectedEndMonth)));
+
+      if (selectedData.length > 0) {
+          chart.data.labels = selectedData.map(d => d.month + '/' + d.year);
+          chart.data.datasets.forEach(function(dataset) {
+              dataset.data = dataset.label === 'Kumulierte Ausgaben' ? selectedData.map(d => d.categories.filter(c => c.name !== 'Einkommen').reduce((sum, c) => sum + c.value, 0)) : selectedData.map(d => d.categories.find(c => c.name === dataset.label).value);
+              dataset.hidden = dataset.label === 'Kumulierte Ausgaben' ? !cumulativeCheckbox.checked : !document.getElementById(dataset.label).checked;
+          });
+      } else {
+          chart.data.labels = [];
+          chart.data.datasets.forEach(function(dataset) {
+              dataset.data = [];
+          });
+      }
+
+      chart.update();
+  }
+</script>
+
+</html>
+
+
+
