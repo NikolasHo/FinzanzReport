@@ -20,7 +20,7 @@ Die Klassifizierung der Buchungen ist Textbasiert. Dafür gibt es die Datei "pat
 Es sind bereits Klassen vordefiniert. Jede Klasse besitzt "Keywords", an deren die Klasse dann in jeder Buchung erkannt wird.
 Die "Keywords" können beliebig erweitert werden:
 
-´´´´´
+```
 "patterns": {
       "Versorgung": {
         "keywords": [
@@ -29,11 +29,11 @@ Die "Keywords" können beliebig erweitert werden:
           "Lidl",
           "Rewe",
           "..."
-´´´´´
+```
 
 Um eine eigene Klasse hinzuzufügen, kann das folgende Beispiel der Datei angehängt werden:
 
-´´´´´
+```
 "patterns": {
       "Versorgung": {
         "keywords": [
@@ -50,4 +50,4 @@ Um eine eigene Klasse hinzuzufügen, kann das folgende Beispiel der Datei angeh�
         ],
         "color": "#ffce56"
       }
-´´´´´
+```
