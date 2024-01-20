@@ -8,34 +8,40 @@
           "Rewe",
           "Kaufland",
           "Netto",
-          "BAEDER BRINGT BIO",
           "Lieferando",
-          "KoRo"
+          "KoRo",
+          "BAECKEREI & KONDITOREI",
+          "DM",
+          "Rossmann",
+          "Mueller"
         ],
         "color": "#36a2eb" 
       },
-      "Pflege": {
+      "Gesundheit": {
         "keywords": [
-          "DM",
-          "Rossmann"
+          "Apotheke",
+          "Debeka",
+          "Privataerztliche Verrechnungsstelle",
+          "DZR"
         ],
-        "color": "#ffce56"
+        "color": "#d1ce56"
       },
       "Einkauf": {
         "keywords": [
           "Amazon",
           "Social Fashion Company GmbH",
           "Megaport GmbH",
-          "Babyone",
           "Obi",
           "Hagebau",
-          "Hornbach"
+          "Hornbach",
+          "eBay"
         ],
         "color": "#4bc0c0" 
       },
       "Einkommen": {
         "keywords": [
-          "Gehalt"
+          "Gehalt",
+          "Einkommen"
         ],
         "color": "#66c2ff" 
       },
@@ -46,11 +52,13 @@
           "Spotify AB",
           "DisneyPlus",
           "Netflix",
-          "Amazon Prime"
+          "Amazon Prime",
+          "MMOGA",
+          "Sky Deutschland"
         ],
         "color": "#acd2ff" 
       },
-      "Versicherung": {
+      "Versicherung & Handy": {
         "keywords": [
           "ERGO",
           "Swiss Life AG",
@@ -61,12 +69,29 @@
       "Handy": {
         "keywords": [
           "klarmobil GmbH",
-          "WinSwim",
-          "O2",
+          "Drillisch Online",
           "Telekom",
-          "Vodafone"
+          "Vodafone",
+          "Apple.com"
         ],
         "color": "#33df21" 
+      },
+      "Wohnung": {
+        "keywords": [
+          "Vattenfall",
+          "Rundfunk ARD",
+          "Darlehen",
+          "GRUNDST",
+          "Krippe"
+        ],
+        "color": "#11df21" 
+      },
+      "Kfz": {
+        "keywords": [
+          "Kfz-Steuer",
+          "Total"
+        ],
+        "color": "#ffce56" 
       }
     }
   }

@@ -5,7 +5,7 @@ $monthArray = @('Januar','Februar','März','April','Mai','Juni','Juli','August',
 function Get-AllCSVDataClassified {
     param (
         [string]$folderPath,
-        [string]$headerLine,
+        [array]$headerLine,
         [string]$patternFile
     )
 
@@ -24,7 +24,7 @@ function Get-AllCSVDataClassified {
 
     # Get data of all files in the folder
     foreach ($csvFile in $csvFiles) {
-        $csvData = Get-Content -Path $csvFile.FullName -Encoding utf8 | ConvertFrom-Csv -Header ($headerLine -split ',')
+        $csvData =Import-Csv -Path $csvFile.FullName -Encoding utf8 -Delimiter ";" -Header $headerLine
         $allCSVData += $csvData
     }
 
@@ -93,9 +93,8 @@ function Get-ClassifiedObject{
             $year = Get-Date $transaction.Buchungstag -Format "yyyy"
             $category = $transaction.Kategorie
     
-            
-            $value = [decimal]$transaction.'Umsatz in EUR'
-    
+            $tmpValue = $($transaction.'Umsatz in EUR')
+            $value = [decimal]::Parse($tmpValue)
             $result += [pscustomobject]@{year=$year;month=$month;category=$category;value=$value}
         }
        
@@ -147,12 +146,12 @@ function Get-SumPerMonthYearCategory {
 
         
         if($existingEntry){
-            $existingEntry.categories +=[pscustomobject]@{name=$category;value= [Math]::Abs($value)}
+            $existingEntry.categories +=[pscustomobject]@{name=$category;value=$value}
         }
         else {
             $result += [pscustomobject]@{year=$year;month=$month;categories=@()}
             $existingFirstEntry = $result | Where-Object { $_.year -eq $year -and $_.month -eq $month }
-            $existingFirstEntry.categories += [pscustomobject]@{name=$category;value= [Math]::Abs($value)}
+            $existingFirstEntry.categories += [pscustomobject]@{name=$category;value=$value}
         }
 
     }
